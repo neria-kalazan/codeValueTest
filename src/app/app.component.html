@@ -1,0 +1,17 @@
+<nz-layout class="app-layout">
+  <nz-header>
+    <div class="logo">
+      <a href="https://ng.ant.design/" target="_blank">
+        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+        <h1>CodeValueTest</h1>
+      </a>
+    </div>
+  </nz-header>
+  <nz-content>
+    <nz-breadcrumb [nzAutoGenerate]='true' nzSeparator=">"></nz-breadcrumb>
+    <div class="inner-content">
+      <router-outlet></router-outlet>
+    </div>
+  </nz-content>
+  <nz-footer>Neria Kalazan ©2021</nz-footer>
+</nz-layout>

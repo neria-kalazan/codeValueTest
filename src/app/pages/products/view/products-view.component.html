@@ -1,0 +1,62 @@
+<h4 nz-typography>{{ productId ? 'Edit' : 'Add New' }} Product</h4>
+
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="5" [nzSpan]="19">
+      <div class="preview-img">
+        <img nz-image width="200px" [nzSrc]="previewImg" [nzFallback]="fallback" alt="" />
+      </div>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired>Name</nz-form-label>
+    <nz-form-control [nzSpan]="19" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="nameErrorTpl">
+      <input nz-input formControlName="name" placeholder="Name" />
+      <ng-template #nameErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">This field is required!</ng-container>
+        <ng-container *ngIf="control.hasError('maxlength')">MaxLength is 30!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5">Image URL</nz-form-label>
+    <nz-form-control [nzSpan]="19" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="imgErrorTpl">
+      <input nz-input formControlName="img" placeholder="Image URL" />
+      <ng-template #imgErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('pattern')">Invalid URL!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5" nzRequired>Price</nz-form-label>
+    <nz-form-control [nzSpan]="19" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="priceErrorTpl">
+      <nz-input-number formControlName="price" [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterDollar" [nzParser]="parserDollar"></nz-input-number>
+      <ng-template #priceErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('required')">This field is required!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSpan]="5">Description</nz-form-label>
+    <nz-form-control [nzSpan]="19" nzHasFeedback nzValidatingTip="Validating..." [nzErrorTip]="descErrorTpl">
+      <nz-textarea-count [nzMaxCharacterCount]="200">
+        <textarea formControlName="description" nz-input rows="5" placeholder="Description"></textarea>
+      </nz-textarea-count>
+      <ng-template #descErrorTpl let-control>
+        <ng-container *ngIf="control.hasError('maxlength')">MaxLength is 200!</ng-container>
+      </ng-template>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-control [nzOffset]="5" [nzSpan]="19">
+      <button nz-button nzType="primary" [disabled]="!validateForm.valid">Submit</button>
+      <button *ngIf="!productId" nz-button (click)="resetForm($event)">Reset</button>
+    </nz-form-control>
+  </nz-form-item>
+</form>

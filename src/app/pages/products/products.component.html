@@ -1,0 +1,90 @@
+<div class="wrapper">
+  <div id="one" class="inner-box">
+    <h4 nz-typography>Products List</h4>
+
+    <div nz-row>
+      <div class="filter-container" nz-col nzSpan="24">
+
+        <form nz-form [nzLayout]="'inline'">
+          <nz-form-item>
+            <nz-form-control>
+              <nz-input-group [nzSuffix]="suffixIconSearch" style="min-width: 100px">
+                <input type="text" nz-input placeholder="Search product" name="keyword" [(ngModel)]="keyword" (ngModelChange)="loadData()" [ngModelOptions]="{standalone: true}"/>
+              </nz-input-group>
+              <ng-template #suffixIconSearch>
+                <i nz-icon nzType="search"></i>
+              </ng-template>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control>
+              <nz-input-group>
+                <nz-select [nzShowArrow]='true' [(ngModel)]="sortBy" style="min-width: 192px" name="sortBy">
+                  <nz-option *ngFor="let s of sortOptions" [nzValue]="s.v" [nzLabel]="s.t"></nz-option>
+                </nz-select>
+              </nz-input-group>
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-control>
+              <button nz-button nzType="primary" [routerLink]='["add"]'>
+                <i nz-icon nzType="plus" nzTheme="outline"></i>
+                Add
+              </button>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+
+      </div>
+    </div>
+
+    <div nz-row>
+      <nz-list nzBordered nzItemLayout="vertical">
+        <nz-list-item *ngFor="let item of productList | filterByKeyword: keyword | sortByField: sortBy">
+
+          <nz-list-item-extra>
+            <img alt="logo" [src]="item.img" />
+          </nz-list-item-extra>
+
+          <nz-list-item-meta>
+            <nz-list-item-meta-title>
+              <a [routerLink]='["view", item.id]'>{{ item.name }}</a>
+            </nz-list-item-meta-title>
+            <nz-list-item-meta-description>
+          <span nz-typography>
+            <strong>Price: </strong>
+          </span>
+              {{ item.price | currency }}
+            </nz-list-item-meta-description>
+          </nz-list-item-meta>
+
+          <p nz-typography nzEllipsis nzExpandable [nzEllipsisRows]="5">
+            {{ item.description }}
+          </p>
+          <ul nz-list-item-actions>
+            <nz-list-item-action>
+              <a style="float: right" nz-tooltip nzTooltipTitle="Remove Product" nz-popconfirm  nzOkText="Yes" nzCancelText="No"
+                 nzPopconfirmTitle="Are you sure delete this product?" (nzOnConfirm)="removeProduct(item.id)">
+                <i nz-icon nzType="delete" nzTheme="twotone" [nzTwotoneColor]="'#eb2f96'"></i>
+              </a>
+            </nz-list-item-action>
+          </ul>
+
+        </nz-list-item>
+        <nz-list-pagination>
+          <nz-pagination [nzPageIndex]="pageIdx" [nzTotal]="(productList | filterByKeyword: keyword).length" nzShowSizeChanger [nzPageSize]="10" [nzShowTotal]="totalTemplate" [nzSize]="'small'"></nz-pagination>
+          <ng-template #totalTemplate let-total>Total {{ total }} items</ng-template>
+        </nz-list-pagination>
+      </nz-list>
+
+    </div>
+
+  </div>
+  <div id="two" class="inner-box">
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
+  </div>
+</div>
+
+

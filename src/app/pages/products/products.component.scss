@@ -1,0 +1,55 @@
+
+.wrapper {
+  overflow:hidden;
+  div {
+    min-height: 50%;
+  }
+  #one {
+    float: left;
+    width: 50%;
+    border-right: 2px dashed #ccc;
+    padding-right: 10px;
+  }
+  #two {
+    overflow:hidden;
+    padding-left: 10px;
+  }
+
+  @media screen and (max-width: 950px) {
+    #one, #two {
+      float: none;
+      min-width: 100%;
+      border: unset;
+      padding: 0;
+    }
+    #two {
+      border-top: 2px dashed #ccc;
+      margin-top: 20px;
+      padding-top: 10px;
+    }
+  }
+
+}
+
+.filter-container {
+  margin-bottom: 20px;
+}
+
+::ng-deep {
+  .ant-list-vertical {
+    .ant-list-item-extra {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        max-height: 200px;
+        max-width: 200px;
+        float: right;
+      }
+    }
+  }
+
+  .ant-pagination.mini .ant-pagination-total-text {
+    float: left;
+  }
+}
